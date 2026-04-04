@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lumina | Admin Dashboard</title>
+  <link rel="stylesheet" href="./css/index.css">
+  <link rel="stylesheet" href="./css/admin.css">
+</head>
+<body class="admin-body">
+
+  <nav class="navbar">
+    <div class="nav-brand">Lumina<span>.</span> <em>Admin</em></div>
+    <ul class="nav-links">
+      <li><a href="./index.html">← View Storefront</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="icon-btn" id="dark-mode-toggle" title="Toggle dark mode">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <div class="admin-container">
+    <aside class="sidebar">
+      <h3>Tools</h3>
+      <ul>
+        <li class="admin-tab active" data-target="overview-view">📊 Dashboard</li>
+        <li class="admin-tab" data-target="marketing-view">🤖 AI Marketing</li>
+        <li class="admin-tab" data-target="inventory-view">📦 Inventory</li>
+        <li class="admin-tab" data-target="promos-view">🏷️ Promo Codes</li>
+        <li class="admin-tab" data-target="inquiries-view">📩 Inquiries</li>
+        <li class="admin-tab" data-target="email-view">📧 Email Composer</li>
+      </ul>
+    </aside>
+
+    <main class="admin-content">
+
+      <!-- OVERVIEW / DASHBOARD -->
+      <section id="overview-view" class="tab-content active">
+        <header class="admin-header">
+          <h1>Business Overview</h1>
+          <p>Real-time metrics tracking the performance of the Lumina storefront.</p>
+        </header>
+        <div class="marketing-grid" style="grid-template-columns:repeat(3,1fr); margin-bottom:var(--space-8);">
+          <div class="panel" style="text-align:center;">
+            <h3 style="color:var(--text-muted); border-bottom:none; margin-bottom:var(--space-2);">Total Revenue</h3>
+            <div id="metric-revenue" style="font-size:2.8rem; font-family:var(--font-heading); color:var(--coastal-blue);">$0</div>
+          </div>
+          <div class="panel" style="text-align:center;">
+            <h3 style="color:var(--text-muted); border-bottom:none; margin-bottom:var(--space-2);">Orders Placed</h3>
+            <div id="metric-orders" style="font-size:2.8rem; font-family:var(--font-heading); color:var(--terracotta);">0</div>
+          </div>
+          <div class="panel" style="text-align:center;">
+            <h3 style="color:var(--text-muted); border-bottom:none; margin-bottom:var(--space-2);">Avg. Order Value</h3>
+            <div id="metric-avg" style="font-size:2.8rem; font-family:var(--font-heading); color:#2e7d32;">$0</div>
+          </div>
+        </div>
+        <div class="panel" style="margin-bottom:var(--space-6);">
+          <h3 style="margin-bottom:var(--space-4);">Revenue Trend</h3>
+          <div id="chart-container">
+            <svg id="revenue-chart" xmlns="http://www.w3.org/2000/svg" style="width:100%; height:220px; display:none;"></svg>
+            <p id="no-chart-msg" style="color:var(--text-muted); text-align:center; padding:var(--space-8);">Complete a checkout on the storefront to see revenue trend appear here.</p>
+          </div>
+        </div>
+        <div class="marketing-grid" style="grid-template-columns:repeat(2,1fr);">
+          <div class="panel">
+            <h3>Loyalty Program</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:var(--space-2);">Points outstanding across all customers:</p>
+            <div id="metric-loyalty" style="font-size:2rem; font-family:var(--font-heading); color:#e6b53a;">0 pts</div>
+          </div>
+          <div class="panel">
+            <h3>Commission Inquiries</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:var(--space-2);">Pending custom order requests:</p>
+            <div id="metric-inquiries" style="font-size:2rem; font-family:var(--font-heading); color:var(--terracotta);">0</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MARKETING VIEW -->
+      <section id="marketing-view" class="tab-content hidden">
+        <header class="admin-header">
+          <h1>Marketing Co-Pilot</h1>
+          <p>Select a product to instantly generate social media campaigns, SEO metadata, and email sequences tuned to the Lumina brand voice.</p>
+        </header>
+        <div class="marketing-grid">
+          <div class="panel">
+            <h3>Campaign Generator</h3>
+            <form id="marketing-form" class="marketing-form">
+              <div class="form-group">
+                <label for="product-select">Select Product</label>
+                <select id="product-select" required><option value="" disabled selected>Loading...</option></select>
+              </div>
+              <div class="form-group">
+                <label for="campaign-goal">Campaign Format</label>
+                <select id="campaign-goal" required>
+                  <option value="instagram">Instagram Post &amp; Hashtags</option>
+                  <option value="email">Email Newsletter</option>
+                  <option value="seo">SEO Meta Description &amp; Keywords</option>
+                  <option value="pinterest">Pinterest Pin Description</option>
+                  <option value="twitter">Twitter/X Thread</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary" id="generate-btn">Generate Marketing Copy
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:6px; vertical-align:middle;"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+              </button>
+            </form>
+          </div>
+          <div class="panel result-panel">
+            <h3>AI Output Box</h3>
+            <div id="output-loading" class="hidden"><div class="spinner"></div> Generating brand-aligned copy...</div>
+            <div id="output-content" class="output-content text-muted">Your generated content will appear here.</div>
+            <button class="btn btn-outline btn-copy hidden" id="copy-btn">Copy to Clipboard</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- INVENTORY VIEW -->
+      <section id="inventory-view" class="tab-content hidden">
+        <header class="admin-header">
+          <h1>Inventory Management</h1>
+          <p>Manage products feeding into the storefront, AI Concierge, and Marketing Co-Pilot.</p>
+        </header>
+        <div class="panel">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+            <h3>Current Products</h3>
+            <button class="btn btn-primary" id="open-add-product-modal">+ New Product</button>
+          </div>
+          <table style="width:100%; border-collapse:collapse; text-align:left;">
+            <thead>
+              <tr style="border-bottom:2px solid var(--border-light);">
+                <th style="padding:12px; color:var(--text-muted);">Thumbnail</th>
+                <th style="padding:12px; color:var(--text-muted);">Name</th>
+                <th style="padding:12px; color:var(--text-muted);">Category</th>
+                <th style="padding:12px; color:var(--text-muted);">Price</th>
+                <th style="padding:12px; color:var(--text-muted);">Stock</th>
+              </tr>
+            </thead>
+            <tbody id="inventory-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- PROMO CODES VIEW -->
+      <section id="promos-view" class="tab-content hidden">
+        <header class="admin-header">
+          <h1>Promo Code Manager</h1>
+          <p>Create and manage discount codes available at storefront checkout. Pre-seeded codes: LUMINA10, COASTAL20, VIP50.</p>
+        </header>
+        <div class="marketing-grid">
+          <div class="panel">
+            <h3>Create New Code</h3>
+            <form id="promo-create-form">
+              <div class="form-group" style="margin-bottom:var(--space-4);">
+                <label style="display:block; margin-bottom:var(--space-2);">Code</label>
+                <input type="text" id="new-code-str" required placeholder="e.g. SUMMER25" style="width:100%; padding:8px; border:1px solid var(--border-light); border-radius:4px; text-transform:uppercase; font-family:monospace; font-weight:700; letter-spacing:2px; background:var(--crisp-white); color:var(--text-dark);">
+              </div>
+              <div class="form-group" style="margin-bottom:var(--space-4);">
+                <label style="display:block; margin-bottom:var(--space-2);">Discount Type</label>
+                <select id="new-code-type" style="width:100%; padding:8px; border:1px solid var(--border-light); border-radius:4px; background:var(--crisp-white); color:var(--text-dark);">
+                  <option value="percent">Percentage (%)</option>
+                  <option value="fixed">Fixed Amount ($)</option>
+                </select>
+              </div>
+              <div class="form-group" style="margin-bottom:var(--space-6);">
+                <label style="display:block; margin-bottom:var(--space-2);">Discount Value</label>
+                <input type="number" id="new-code-value" required placeholder="e.g. 15" style="width:100%; padding:8px; border:1px solid var(--border-light); border-radius:4px; background:var(--crisp-white); color:var(--text-dark);">
+              </div>
+              <button type="submit" class="btn btn-primary" style="width:100%;">Create Code</button>
+            </form>
+          </div>
+          <div class="panel">
+            <h3>Active Codes</h3>
+            <div id="promo-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- INQUIRIES VIEW -->
+      <section id="inquiries-view" class="tab-content hidden">
+        <header class="admin-header">
+          <h1>Commission Inquiries</h1>
+          <p>All custom order requests submitted through the storefront's Commission Wizard.</p>
+        </header>
+        <div class="panel">
+          <div id="inquiries-list"></div>
+        </div>
+      </section>
+
+      <!-- EMAIL COMPOSER VIEW -->
+      <section id="email-view" class="tab-content hidden">
+        <header class="admin-header">
+          <h1>Email Blast Composer</h1>
+          <p>Craft a brand-aligned email campaign with AI assistance. Copy the output and paste into your email marketing platform.</p>
+        </header>
+        <div class="marketing-grid">
+          <div class="panel">
+            <h3>Campaign Brief</h3>
+            <form id="email-compose-form">
+              <div class="form-group" style="margin-bottom:var(--space-4);">
+                <label style="display:block; margin-bottom:var(--space-2);">Email Subject</label>
+                <input type="text" id="email-subject" placeholder="e.g. New Summer Collection is Here" style="width:100%; padding:8px; border:1px solid var(--border-light); border-radius:4px; background:var(--crisp-white); color:var(--text-dark);">
+              </div>
+              <div class="form-group" style="margin-bottom:var(--space-4);">
+                <label style="display:block; margin-bottom:var(--space-2);">Campaign Occasion</label>
+                <select id="email-occasion" style="width:100%; padding:8px; border:1px solid var(--border-light); border-radius:4px; background:var(--crisp-white); color:var(--text-dark);">
+                  <option value="new-arrivals">New Arrivals</option>
+                  <option value="holiday">Holiday / Gifting Season</option>
+                  <option value="sale">Promotion / Limited Sale</option>
+                  <option value="story">Brand Story &amp; Artisan Feature</option>
+                  <option value="restock">Popular Piece Restock</option>
+                </select>
+              </div>
+              <div class="form-group" style="margin-bottom:var(--space-6);">
+                <label style="display:block; margin-bottom:var(--space-2);">Additional Notes</label>
+                <textarea id="email-notes" placeholder="Mention specific products, promotions, or tone adjustments..." style="width:100%; height:100px; padding:8px; border:1px solid var(--border-light); border-radius:4px; font-family:var(--font-body); resize:none; background:var(--crisp-white); color:var(--text-dark);"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" id="compose-btn" style="width:100%;">✨ Generate Email Campaign</button>
+            </form>
+          </div>
+          <div class="panel result-panel">
+            <h3>Email Preview</h3>
+            <div id="email-loading" class="hidden"><div class="spinner"></div> Crafting your campaign...</div>
+            <div id="email-output" class="output-content text-muted">Your AI-generated email content will appear here. Copy it into Mailchimp, Klaviyo, or your email provider.</div>
+            <button class="btn btn-outline btn-copy hidden" id="copy-email-btn">Copy Email Content</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Add Product Modal -->
+  <div class="modal" id="add-product-modal">
+    <div class="modal-content" style="max-width:500px; padding:var(--space-8);">
+      <button class="close-btn" id="close-add-product">&times;</button>
+      <h2 style="margin-bottom:var(--space-6); font-family:var(--font-heading);">Add New Product</h2>
+      <form id="add-product-form">
+        <div class="form-group" style="margin-bottom:var(--space-4);">
+          <label style="display:block; margin-bottom:var(--space-2);">Product Name</label>
+          <input type="text" id="new-prod-name" required style="width:100%; padding:8px; border:1px solid var(--border-light); border-radius:4px; background:var(--crisp-white); color:var(--text-dark);">
+        </div>
+        <div class="form-group" style="margin-bottom:var(--space-4);">
+          <label style="display:block; margin-bottom:var(--space-2);">Category</label>
+          <select id="new-prod-category" required style="width:100%; padding:8px; border:1px solid var(--border-light); border-radius:4px; background:var(--crisp-white); color:var(--text-dark);">
+            <option value="Turquoise">Turquoise</option>
+            <option value="Silver">Silver</option>
+            <option value="Gold">Gold</option>
+            <option value="Coastal Gems">Coastal Gems</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom:var(--space-4);">
+          <label style="display:block; margin-bottom:var(--space-2);">Price ($)</label>
+          <input type="number" id="new-prod-price" required style="width:100%; padding:8px; border:1px solid var(--border-light); border-radius:4px; background:var(--crisp-white); color:var(--text-dark);">
+        </div>
+        <div class="form-group" style="margin-bottom:var(--space-4);">
+          <label style="display:block; margin-bottom:var(--space-2);">Initial Stock Quantity</label>
+          <input type="number" id="new-prod-stock" value="5" required style="width:100%; padding:8px; border:1px solid var(--border-light); border-radius:4px; background:var(--crisp-white); color:var(--text-dark);">
+        </div>
+        <div class="form-group" style="margin-bottom:var(--space-4);">
+          <label style="display:block; margin-bottom:var(--space-2);">Image URL</label>
+          <input type="url" id="new-prod-image" placeholder="https://images.unsplash.com/..." required style="width:100%; padding:8px; border:1px solid var(--border-light); border-radius:4px; background:var(--crisp-white); color:var(--text-dark);">
+        </div>
+        <div class="form-group" style="margin-bottom:var(--space-6);">
+          <label style="display:block; margin-bottom:var(--space-2);">Description</label>
+          <textarea id="new-prod-desc" required style="width:100%; padding:8px; border:1px solid var(--border-light); border-radius:4px; height:60px; background:var(--crisp-white); color:var(--text-dark);"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Save Product</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="./js/marketingAgent.js"></script>
+</body>
+</html>
