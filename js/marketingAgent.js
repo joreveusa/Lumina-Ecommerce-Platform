@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   async function callPollinationsMarketing(product, goal) {
-    const sys = 'You are Lumina\'s luxury Marketing Copywriter. Brand tone: desert warmth meets coastal elegance, Santa Fe meets Santa Barbara. Writing is poetic yet precise.';
+    const sys = "You are the marketing voice for Lumina, a handcrafted jewelry brand founded by Veronica Garza. Veronica was born in 1963 in Monterey, California — raised on the Pacific coast with deep Mexican heritage, her father a restaurant owner. She studied in Mexico City, opened her first jewelry shop in Ventura, CA, and spent decades with the US Forest Service walking California's landscapes. All that time she attended gem shows and art shows, building a master's eye for natural stones. Brand tone: warm, coastal California with Mexican artisan depth. Poetry over pitch. Evocative and precise.";
     const prompt = `Write high-converting marketing copy for: "${product.name}" (Category: ${product.category}, Price: ${product.priceStr}). Description: "${product.description}". Format: ${goal}. Include all relevant details for the chosen format (e.g. hashtags for Instagram, subject line for email, etc.).`;
     const res = await fetch('https://text.pollinations.ai/', {
       method: 'POST',
@@ -320,7 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   async function callPollinationsEmail(subject, occasion, notes, products) {
-    const sys = 'You are Lumina\'s luxury email marketer. Brand: desert-meets-coastal jewelry. Santa Fe art tradition + Santa Barbara coastal elegance. Write beautiful, compelling HTML-free email copy.';
+    const sys = "You are the email copywriter for Lumina, Veronica Garza's handcrafted jewelry brand. Veronica is a master jeweler born in Monterey, CA — raised on the California coast with Mexican heritage. She opened her first jewelry shop in Ventura, CA, served with the US Forest Service for decades while attending gem shows, and is now fully devoted to her lifelong craft. Brand voice: warm, authentic, coastal California with artisan depth. Beautiful and compelling, never salesy. HTML-free email copy only.";
     const prompt = `Write a complete email marketing campaign with the following details:
 Subject Line: "${subject}"
 Occasion: ${occasion}

@@ -6,10 +6,14 @@ class Database {
   }
 
   initCheck() {
+    const CATALOG_VERSION = 'v4_fixed_photos';
     const existing = JSON.parse(localStorage.getItem('lumina_products') || 'null');
-    // Seed if missing OR empty (handles corrupt/cleared state)
-    if (!existing || !Array.isArray(existing) || existing.length === 0) {
+    const storedVersion = localStorage.getItem('lumina_catalog_version');
+
+    // Reseed if: missing, empty, or catalog version has changed (new real photos)
+    if (!existing || !Array.isArray(existing) || existing.length === 0 || storedVersion !== CATALOG_VERSION) {
       localStorage.setItem('lumina_products', JSON.stringify(customMockData));
+      localStorage.setItem('lumina_catalog_version', CATALOG_VERSION);
     } else {
       // Migration: add stock field to existing products if missing
       let changed = false;
@@ -27,6 +31,7 @@ class Database {
       ]));
     }
   }
+
 
   // --- PRODUCTS ---
   getProducts() { return JSON.parse(localStorage.getItem('lumina_products')) || []; }
